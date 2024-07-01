@@ -20,6 +20,20 @@ export async function middleware(request: NextRequest) {
       console.log(err);
     }));
   console.log(verifiedToken);
+
+  if (verifiedToken) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-user-id", verifiedToken.userId);
+    requestHeaders.set("x-user-name", verifiedToken.name);
+
+    const response = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+
+    return response;
+  }
   if (
     request.nextUrl.pathname !== "/" &&
     request.nextUrl.pathname !== "/login" &&
@@ -28,22 +42,9 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.redirect(new URL("/", request.url));
   }
-
-  if (verifiedToken) {
-    const response = NextResponse.next();
-    response.headers.set("x-verified-token", JSON.stringify(verifiedToken));
-    return response;
-  }
-
   return NextResponse.next();
-  // if(verifiedToken){
-  //   setAuthData(verifiedToken);
-  // }
-
-  // if (request.nextUrl.pathname.startsWith("/b")) {
-  // }
 }
 
-// export const config = {
-//   matcher: ['/home'],
-// };
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};

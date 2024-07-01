@@ -1,11 +1,6 @@
 import NotFound from "@/app/not-found";
 import client from "./client";
 
-export const authUserRegister = async () => {
-  const { data } = await client.get("auth/register");
-  return data.results;
-};
-
 export const authUserLogin = async (email, password) => {
   const { data } = await client.post("auth/login", {
     email: email,

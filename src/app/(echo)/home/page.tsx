@@ -11,6 +11,7 @@ import Spinner from "@/app/_components/Spinner";
 import AllFeedsList from "@/app/_components/AllFeedsList";
 import { unstable_noStore as noStore } from "next/cache";
 import SignOutButton from "@/app/_components/SignOutButton";
+import { headers } from "next/headers";
 
 // revalidate to update feeds in time
 export const revalidate = 300;
@@ -20,20 +21,19 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  // const {
-  //   data: feeds,
-  //   error,
-  //   isLoading,
-  //   isError,
-  // } = useQuery(["AllFeeds"], () => GetAllFeeds());
+  const headersList = headers();
+  const userId = headersList.get("x-user-id");
+  const userName = headersList.get("x-user-name");
+  console.log("########");
 
-  // if (isLoading) return <Loading />;
-  // if (isError) return <div>Error: {error}</div>;
+  console.log("User ID:", userId);
+  console.log("User Email:", userName);
 
   // it will not cache anything
   // noStore()
   return (
     <div>
+      <h1>{userName}</h1>
       <Link href="/login">Login</Link>
       <Link href="/signup">Register</Link>
       <SignOutButton />

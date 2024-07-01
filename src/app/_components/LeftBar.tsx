@@ -5,8 +5,8 @@ import Publish from "./Publish";
 import SearchBar from "./SearchBar";
 
 async function LeftBar() {
-  const CurrentUser = await showCurrUser();
-  console.log(CurrentUser);
+  // const CurrentUser = await showCurrUser();
+  // console.log(CurrentUser);
   return (
     // <AuthProvider>
     <div>
